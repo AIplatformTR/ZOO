@@ -6,6 +6,7 @@ import { useCart } from '../context/CartContext';
 import { handleFirestoreError, OperationType } from '../utils/firestoreErrorHandler';
 import { ArrowLeft, ShoppingCart, CheckCircle, AlertCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { INITIAL_PRODUCTS } from '../data/initialProducts';
 
 export const ProductDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -23,6 +24,11 @@ export const ProductDetails: React.FC = () => {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           setProduct({ id: docSnap.id, ...docSnap.data() });
+        } else {
+          const fallbackProduct = INITIAL_PRODUCTS.find(p => p.id === id);
+          if (fallbackProduct) {
+            setProduct(fallbackProduct);
+          }
         }
       } catch (error) {
         handleFirestoreError(error, OperationType.GET, `products_i18n/${id}`);
@@ -41,8 +47,12 @@ export const ProductDetails: React.FC = () => {
     return <div className="max-w-7xl mx-auto px-4 py-20 text-center">{t('product.notFound')}</div>;
   }
 
-  const productName = product.name[currentLang] || product.name['en'] || 'Unknown Product';
-  const productDescription = product.description[currentLang] || product.description['en'] || '';
+  const productName = (product.name && typeof product.name === 'object') 
+    ? (product.name[currentLang] || product.name['en'] || 'Unknown Product') 
+    : (product.name || 'Unknown Product');
+  const productDescription = (product.description && typeof product.description === 'object') 
+    ? (product.description[currentLang] || product.description['en'] || '') 
+    : (product.description || '');
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

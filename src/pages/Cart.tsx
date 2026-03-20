@@ -89,7 +89,7 @@ export const Cart: React.FC = () => {
             <h2 className="text-xl font-bold text-stone-900 mb-6 border-b border-stone-100 pb-4">{t('cart.items')}</h2>
             <div className="space-y-6">
               {items.map(item => {
-                const itemName = typeof item.name === 'object' ? (item.name[currentLang] || item.name['en'] || 'Unknown') : item.name;
+                const itemName = (item.name && typeof item.name === 'object') ? (item.name[currentLang] || item.name['en'] || 'Unknown') : item.name;
                 return (
                   <div key={item.productId} className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 py-4 border-b border-stone-50 last:border-0">
                     <img src={item.imageUrl} alt={itemName} className="w-24 h-24 object-cover rounded-xl bg-stone-50" referrerPolicy="no-referrer" />

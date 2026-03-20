@@ -6,6 +6,7 @@ import { ProductCard } from '../components/ProductCard';
 import { handleFirestoreError, OperationType } from '../utils/firestoreErrorHandler';
 import { Search, Filter } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { INITIAL_PRODUCTS } from '../data/initialProducts';
 
 export const Catalog: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -27,6 +28,11 @@ export const Catalog: React.FC = () => {
         const querySnapshot = await getDocs(q);
         let fetchedProducts = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() as any }));
 
+        // Fallback to initial products if database is empty
+        if (fetchedProducts.length === 0) {
+          fetchedProducts = [...INITIAL_PRODUCTS];
+        }
+
         if (categoryFilter) {
           fetchedProducts = fetchedProducts.filter(p => p.category === categoryFilter);
         }
@@ -35,10 +41,10 @@ export const Catalog: React.FC = () => {
         }
         if (searchTerm) {
           fetchedProducts = fetchedProducts.filter(p => {
-            const name = p.name[currentLang] || p.name['en'] || '';
-            const desc = p.description[currentLang] || p.description['en'] || '';
-            return name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                   desc.toLowerCase().includes(searchTerm.toLowerCase());
+            const nameStr = (p.name && typeof p.name === 'object') ? (p.name[currentLang] || p.name['en'] || '') : (p.name || '');
+            const descStr = (p.description && typeof p.description === 'object') ? (p.description[currentLang] || p.description['en'] || '') : (p.description || '');
+            return nameStr.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                   descStr.toLowerCase().includes(searchTerm.toLowerCase());
           });
         }
 
@@ -80,7 +86,7 @@ export const Catalog: React.FC = () => {
             </div>
             
             <div className="mb-6">
-              <h3 className="text-sm font-medium text-stone-500 uppercase tracking-wider mb-3">{t('catalog.category')}</h3>
+              <h3 className="text-sm font-medium text-stone-500 uppercase tracking-wider mb-3">{t('catalog.animal')}</h3>
               <div className="space-y-2">
                 <button
                   onClick={() => {
@@ -93,7 +99,7 @@ export const Catalog: React.FC = () => {
                       : 'text-stone-600 hover:bg-stone-50'
                   }`}
                 >
-                  {t('catalog.allCategories')}
+                  {t('categories.all')}
                 </button>
                 {['dogs', 'cats', 'rodents', 'birds', 'fish'].map(cat => (
                   <button
@@ -115,7 +121,7 @@ export const Catalog: React.FC = () => {
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-stone-500 uppercase tracking-wider mb-3">{t('catalog.type')}</h3>
+              <h3 className="text-sm font-medium text-stone-500 uppercase tracking-wider mb-3">{t('catalog.productType')}</h3>
               <div className="space-y-2">
                 <button
                   onClick={() => {
@@ -128,7 +134,7 @@ export const Catalog: React.FC = () => {
                       : 'text-stone-600 hover:bg-stone-50'
                   }`}
                 >
-                  {t('catalog.allTypes')}
+                  {t('types.all')}
                 </button>
                 {['food', 'toys', 'accessories', 'pharmacy'].map(type => (
                   <button
@@ -167,7 +173,7 @@ export const Catalog: React.FC = () => {
             </div>
           ) : (
             <div className="text-center py-20 bg-white rounded-2xl border border-stone-100">
-              <p className="text-stone-500 text-lg">{t('catalog.noProducts')}</p>
+              <p className="text-stone-500 text-lg">{t('catalog.notFound')}</p>
             </div>
           )}
         </div>

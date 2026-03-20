@@ -106,8 +106,8 @@ export const Admin: React.FC = () => {
                       <div className="text-sm text-stone-900">
                         {order.items.length} {t('admin.itemsCount')}
                       </div>
-                      <div className="text-xs text-stone-500 truncate max-w-[200px]" title={order.items.map((i: any) => typeof i.name === 'object' ? (i.name[currentLang] || i.name['en']) : i.name).join(', ')}>
-                        {typeof order.items[0].name === 'object' ? (order.items[0].name[currentLang] || order.items[0].name['en']) : order.items[0].name} {order.items.length > 1 && `и еще ${order.items.length - 1}`}
+                      <div className="text-xs text-stone-500 truncate max-w-[200px]" title={order.items.map((i: any) => (i.name && typeof i.name === 'object') ? (i.name[currentLang] || i.name['en']) : i.name).join(', ')}>
+                        {(order.items[0].name && typeof order.items[0].name === 'object') ? (order.items[0].name[currentLang] || order.items[0].name['en']) : order.items[0].name} {order.items.length > 1 && `и еще ${order.items.length - 1}`}
                       </div>
                     </td>
                     <td className="py-4 px-6 font-bold text-stone-900">

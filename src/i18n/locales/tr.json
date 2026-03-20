@@ -47,6 +47,31 @@
     "addToCart": "Sepete Ekle",
     "almostGone": "Tükenmek üzere"
   },
+  "about": {
+    "subtitle": "Biz, hayvanları en az sizin kadar seven bir grup meraklıyız. Amacımız evcil hayvan bakımını basit, kullanışlı ve teknolojik hale getirmektir.",
+    "features": {
+      "care": {
+        "title": "Herkese Özen",
+        "desc": "İçerikleri ve kaliteyi kontrol ederek ürünleri özenle seçiyoruz."
+      },
+      "quality": {
+        "title": "Kalite Garantisi",
+        "desc": "Sadece güvenilir tedarikçiler ve markalarla çalışıyoruz."
+      },
+      "delivery": {
+        "title": "Hızlı Teslimat",
+        "desc": "Siparişleri en kısa sürede kapınıza kadar teslim ediyoruz."
+      },
+      "support": {
+        "title": "7/24 Destek",
+        "desc": "Yapay zeka veterinerimiz ve destek ekibimiz her zaman yanınızda."
+      }
+    },
+    "mission": {
+      "title": "Misyonumuz",
+      "desc": "Her evcil hayvanın en iyisini hak ettiğine inanıyoruz. Bu yüzden PetStore AI'yi yarattık — ileri teknolojinin evcil hayvan sahiplerine doğru seçimleri yapmalarında yardımcı olduğu bir yer. Akıllı yapay zeka asistanımız, evcil hayvanınızın ihtiyaçlarını analiz eder ve sadece onlara gerçekten uygun olanı önerir."
+    }
+  },
   "cart": {
     "title": "Siparişi Tamamla",
     "empty": "Sepetiniz boş",

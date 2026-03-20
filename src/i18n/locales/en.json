@@ -47,6 +47,31 @@
     "addToCart": "Add to Cart",
     "almostGone": "Almost gone"
   },
+  "about": {
+    "subtitle": "We are a team of enthusiasts who love animals just as much as you do. Our goal is to make pet care simple, convenient, and tech-driven.",
+    "features": {
+      "care": {
+        "title": "Care for Everyone",
+        "desc": "We carefully select products, checking ingredients and quality."
+      },
+      "quality": {
+        "title": "Quality Guarantee",
+        "desc": "We work only with trusted suppliers and brands."
+      },
+      "delivery": {
+        "title": "Fast Delivery",
+        "desc": "We deliver orders right to your door in the shortest possible time."
+      },
+      "support": {
+        "title": "24/7 Support",
+        "desc": "Our AI vet and support team are always available."
+      }
+    },
+    "mission": {
+      "title": "Our Mission",
+      "desc": "We believe every pet deserves the best. That's why we created PetStore AI — a place where advanced technology helps pet owners make the right choices. Our smart AI assistant analyzes your pet's needs and suggests only what truly suits them."
+    }
+  },
   "cart": {
     "title": "Checkout",
     "empty": "Your cart is empty",

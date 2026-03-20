@@ -4,6 +4,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
 import { GoogleGenAI } from '@google/genai';
 import { Link } from 'react-router-dom';
+import { INITIAL_PRODUCTS } from '../data/initialProducts';
 
 // Initialize Gemini
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
@@ -43,10 +44,15 @@ export const AIAssistant: React.FC = () => {
     const fetchCatalog = async () => {
       try {
         const snapshot = await getDocs(collection(db, 'products_i18n'));
-        const products = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() as any }));
+        let products = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() as any }));
+        
+        if (products.length === 0) {
+          products = [...INITIAL_PRODUCTS];
+        }
+
         const contextString = products.map(p => {
-          const name = typeof p.name === 'object' ? (p.name['ru'] || p.name['en']) : p.name;
-          const desc = typeof p.description === 'object' ? (p.description['ru'] || p.description['en']) : p.description;
+          const name = (p.name && typeof p.name === 'object') ? (p.name['ru'] || p.name['en']) : p.name;
+          const desc = (p.description && typeof p.description === 'object') ? (p.description['ru'] || p.description['en']) : p.description;
           return `- ID: ${p.id}, Название: ${name}, Категория: ${p.category}, Тип: ${p.type}, Цена: ${p.price} руб, Описание: ${desc}, В наличии: ${p.stock} шт.`;
         }).join('\n');
         setCatalogContext(contextString);

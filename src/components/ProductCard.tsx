@@ -6,11 +6,11 @@ import { useTranslation } from 'react-i18next';
 
 interface Product {
   id: string;
-  name: Record<string, string>;
+  name: Record<string, string> | string;
   category: string;
   type: string;
   price: number;
-  description: Record<string, string>;
+  description: Record<string, string> | string;
   imageUrl: string;
   stock: number;
 }
@@ -20,7 +20,9 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
   const { t, i18n } = useTranslation();
   const currentLang = i18n.language.split('-')[0];
 
-  const productName = product.name[currentLang] || product.name['en'] || 'Unknown Product';
+  const productName = (product.name && typeof product.name === 'object') 
+    ? (product.name[currentLang] || product.name['en'] || 'Unknown Product') 
+    : (product.name || 'Unknown Product');
 
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden hover:shadow-md transition-shadow flex flex-col h-full">
