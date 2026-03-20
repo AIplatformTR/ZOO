@@ -1,0 +1,7 @@
+{
+  "name": "PetStore MVP",
+  "description": "Интернет-магазин зоотоваров с AI-ассистентом, корзиной и админ-панелью.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
