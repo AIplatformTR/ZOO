@@ -14,7 +14,7 @@ export const INITIAL_PRODUCTS = [
       en: "Complete dry food for adult medium breed dogs (weight from 11 to 25 kg) aged 12 months to 7 years.",
       tr: "12 aylıktan 7 yaşına kadar orta ırk yetişkin köpekler (11-25 kg) için tam kuru mama."
     },
-    imageUrl: "https://images.unsplash.com/photo-1589924691995-400dc9ecc119?auto=format&fit=crop&w=400&q=80",
+    imageUrl: "https://picsum.photos/seed/dogfood/400/400",
     stock: 15
   },
   {
@@ -32,7 +32,7 @@ export const INITIAL_PRODUCTS = [
       en: "Appetizing chunks in jelly for adult cats. 100% balanced diet.",
       tr: "Yetişkin kediler için jöle içinde iştah açıcı parçalar. %100 dengeli beslenme."
     },
-    imageUrl: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=400&q=80",
+    imageUrl: "https://picsum.photos/seed/catfood/400/400",
     stock: 200
   },
   {
@@ -50,7 +50,7 @@ export const INITIAL_PRODUCTS = [
       en: "Legendary ultra-durable rubber toy. Perfect for chewing and fetch games. Can be stuffed with treats.",
       tr: "Efsanevi ultra dayanıklı kauçuk oyuncak. Çiğneme ve getir-götür oyunları için ideal. İçi ödül maması ile doldurulabilir."
     },
-    imageUrl: "https://images.unsplash.com/photo-1576201836106-db1758fd1c97?auto=format&fit=crop&w=400&q=80",
+    imageUrl: "https://picsum.photos/seed/dogtoy/400/400",
     stock: 40
   },
   {
@@ -68,7 +68,7 @@ export const INITIAL_PRODUCTS = [
       en: "Comfortable sisal scratcher with a soft plush bed on top. Height 60 cm.",
       tr: "Üstünde yumuşak peluş yatak bulunan rahat sisal tırmalama tahtası. Yükseklik 60 cm."
     },
-    imageUrl: "https://images.unsplash.com/photo-1543852786-1cf6624b9987?auto=format&fit=crop&w=400&q=80",
+    imageUrl: "https://picsum.photos/seed/catscratcher/400/400",
     stock: 12
   },
   {
@@ -86,7 +86,7 @@ export const INITIAL_PRODUCTS = [
       en: "Effective treatment against external and internal parasites (fleas, ticks, helminths). 3 pipettes.",
       tr: "Dış ve iç parazitlere (pire, kene, helmint) karşı etkili tedavi. 3 pipet."
     },
-    imageUrl: "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=400&q=80",
+    imageUrl: "https://picsum.photos/seed/catdrops/400/400",
     stock: 30
   },
   {
@@ -104,7 +104,7 @@ export const INITIAL_PRODUCTS = [
       en: "Spacious two-story cage with a transparent plastic base. Includes a wheel, water bottle, feeder, and house.",
       tr: "Şeffaf plastik tabanlı geniş iki katlı kafes. Tekerlek, suluk, yemlik ve ev dahildir."
     },
-    imageUrl: "https://images.unsplash.com/photo-1425082661705-1834bfd0999c?auto=format&fit=crop&w=400&q=80",
+    imageUrl: "https://picsum.photos/seed/hamstercage/400/400",
     stock: 8
   },
   {
@@ -122,7 +122,7 @@ export const INITIAL_PRODUCTS = [
       en: "Main diet for budgerigars. Contains selected grains, seeds, and algae.",
       tr: "Muhabbet kuşları için ana besin. Seçilmiş tahıllar, tohumlar ve yosun içerir."
     },
-    imageUrl: "https://images.unsplash.com/photo-1552728089-57168bb3e003?auto=format&fit=crop&w=400&q=80",
+    imageUrl: "https://picsum.photos/seed/birdfood/400/400",
     stock: 50
   },
   {
@@ -140,7 +140,7 @@ export const INITIAL_PRODUCTS = [
       en: "Internal filter for aquariums of 60-100 liters. Provides excellent water cleaning and aeration.",
       tr: "60-100 litrelik akvaryumlar için iç filtre. Mükemmel su temizliği ve havalandırma sağlar."
     },
-    imageUrl: "https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?auto=format&fit=crop&w=400&q=80",
+    imageUrl: "https://picsum.photos/seed/aquariumfilter/400/400",
     stock: 15
   },
   {
@@ -158,7 +158,7 @@ export const INITIAL_PRODUCTS = [
       en: "Excellently absorbs moisture and instantly blocks odors. Dust-free and doesn't stick to paws.",
       tr: "Nemi mükemmel şekilde emer ve kokuları anında hapseder. Tozsuzdur ve patilere yapışmaz."
     },
-    imageUrl: "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?auto=format&fit=crop&w=400&q=80",
+    imageUrl: "https://picsum.photos/seed/catlitter/400/400",
     stock: 80
   },
   {
@@ -176,7 +176,7 @@ export const INITIAL_PRODUCTS = [
       en: "Reliable retractable leash with a 5-meter cord. Convenient braking system.",
       tr: "5 metrelik kordonlu güvenilir otomatik kayış. Kullanışlı fren sistemi."
     },
-    imageUrl: "https://images.unsplash.com/photo-1605025540943-77cd0256140b?auto=format&fit=crop&w=400&q=80",
+    imageUrl: "https://picsum.photos/seed/dogleash/400/400",
     stock: 25
   }
 ];
