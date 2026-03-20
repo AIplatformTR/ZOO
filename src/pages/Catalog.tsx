@@ -5,12 +5,15 @@ import { db } from '../firebase';
 import { ProductCard } from '../components/ProductCard';
 import { handleFirestoreError, OperationType } from '../utils/firestoreErrorHandler';
 import { Search, Filter } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const Catalog: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const { t, i18n } = useTranslation();
+  const currentLang = i18n.language.split('-')[0];
 
   const categoryFilter = searchParams.get('category');
   const typeFilter = searchParams.get('type');
@@ -19,10 +22,10 @@ export const Catalog: React.FC = () => {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        let q = collection(db, 'products');
+        let q = collection(db, 'products_i18n');
         // Simple client-side filtering for MVP to avoid complex composite indexes
         const querySnapshot = await getDocs(q);
-        let fetchedProducts = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        let fetchedProducts = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() as any }));
 
         if (categoryFilter) {
           fetchedProducts = fetchedProducts.filter(p => p.category === categoryFilter);
@@ -31,33 +34,35 @@ export const Catalog: React.FC = () => {
           fetchedProducts = fetchedProducts.filter(p => p.type === typeFilter);
         }
         if (searchTerm) {
-          fetchedProducts = fetchedProducts.filter(p => 
-            p.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-            p.description.toLowerCase().includes(searchTerm.toLowerCase())
-          );
+          fetchedProducts = fetchedProducts.filter(p => {
+            const name = p.name[currentLang] || p.name['en'] || '';
+            const desc = p.description[currentLang] || p.description['en'] || '';
+            return name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                   desc.toLowerCase().includes(searchTerm.toLowerCase());
+          });
         }
 
         setProducts(fetchedProducts);
       } catch (error) {
-        handleFirestoreError(error, OperationType.GET, 'products');
+        handleFirestoreError(error, OperationType.GET, 'products_i18n');
       } finally {
         setLoading(false);
       }
     };
 
     fetchProducts();
-  }, [categoryFilter, typeFilter, searchTerm]);
+  }, [categoryFilter, typeFilter, searchTerm, currentLang]);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-        <h1 className="text-3xl font-bold text-stone-900">Каталог товаров</h1>
+        <h1 className="text-3xl font-bold text-stone-900">{t('nav.catalog')}</h1>
         
         <div className="relative w-full md:w-96">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 w-5 h-5" />
           <input 
             type="text" 
-            placeholder="Поиск по названию..." 
+            placeholder={t('catalog.search')} 
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full pl-10 pr-4 py-2 border border-stone-200 rounded-full focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white"
@@ -71,50 +76,74 @@ export const Catalog: React.FC = () => {
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-stone-100 sticky top-24">
             <div className="flex items-center gap-2 mb-6 text-stone-900 font-semibold">
               <Filter className="w-5 h-5" />
-              Фильтры
+              {t('catalog.filters')}
             </div>
             
             <div className="mb-6">
-              <h3 className="text-sm font-medium text-stone-500 uppercase tracking-wider mb-3">Животное</h3>
+              <h3 className="text-sm font-medium text-stone-500 uppercase tracking-wider mb-3">{t('catalog.category')}</h3>
               <div className="space-y-2">
-                {['Все', 'Собаки', 'Кошки', 'Грызуны', 'Птицы', 'Рыбки'].map(cat => (
+                <button
+                  onClick={() => {
+                    searchParams.delete('category');
+                    setSearchParams(searchParams);
+                  }}
+                  className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+                    !categoryFilter 
+                      ? 'bg-emerald-50 text-emerald-700 font-medium' 
+                      : 'text-stone-600 hover:bg-stone-50'
+                  }`}
+                >
+                  {t('catalog.allCategories')}
+                </button>
+                {['dogs', 'cats', 'rodents', 'birds', 'fish'].map(cat => (
                   <button
                     key={cat}
                     onClick={() => {
-                      if (cat === 'Все') searchParams.delete('category');
-                      else searchParams.set('category', cat);
+                      searchParams.set('category', cat);
                       setSearchParams(searchParams);
                     }}
                     className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
-                      (categoryFilter === cat || (cat === 'Все' && !categoryFilter)) 
+                      categoryFilter === cat 
                         ? 'bg-emerald-50 text-emerald-700 font-medium' 
                         : 'text-stone-600 hover:bg-stone-50'
                     }`}
                   >
-                    {cat}
+                    {t(`categories.${cat}`)}
                   </button>
                 ))}
               </div>
             </div>
 
             <div>
-              <h3 className="text-sm font-medium text-stone-500 uppercase tracking-wider mb-3">Тип товара</h3>
+              <h3 className="text-sm font-medium text-stone-500 uppercase tracking-wider mb-3">{t('catalog.type')}</h3>
               <div className="space-y-2">
-                {['Все', 'Корм', 'Игрушки', 'Амуниция', 'Ветаптека', 'Аксессуары'].map(type => (
+                <button
+                  onClick={() => {
+                    searchParams.delete('type');
+                    setSearchParams(searchParams);
+                  }}
+                  className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+                    !typeFilter 
+                      ? 'bg-emerald-50 text-emerald-700 font-medium' 
+                      : 'text-stone-600 hover:bg-stone-50'
+                  }`}
+                >
+                  {t('catalog.allTypes')}
+                </button>
+                {['food', 'toys', 'accessories', 'pharmacy'].map(type => (
                   <button
                     key={type}
                     onClick={() => {
-                      if (type === 'Все') searchParams.delete('type');
-                      else searchParams.set('type', type);
+                      searchParams.set('type', type);
                       setSearchParams(searchParams);
                     }}
                     className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
-                      (typeFilter === type || (type === 'Все' && !typeFilter)) 
+                      typeFilter === type 
                         ? 'bg-emerald-50 text-emerald-700 font-medium' 
                         : 'text-stone-600 hover:bg-stone-50'
                     }`}
                   >
-                    {type}
+                    {t(`types.${type}`)}
                   </button>
                 ))}
               </div>
@@ -138,7 +167,7 @@ export const Catalog: React.FC = () => {
             </div>
           ) : (
             <div className="text-center py-20 bg-white rounded-2xl border border-stone-100">
-              <p className="text-stone-500 text-lg">Товары не найдены. Попробуйте изменить фильтры.</p>
+              <p className="text-stone-500 text-lg">{t('catalog.noProducts')}</p>
             </div>
           )}
         </div>

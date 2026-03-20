@@ -42,11 +42,13 @@ export const AIAssistant: React.FC = () => {
   useEffect(() => {
     const fetchCatalog = async () => {
       try {
-        const snapshot = await getDocs(collection(db, 'products'));
-        const products = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        const contextString = products.map(p => 
-          `- ID: ${p.id}, Название: ${p.name}, Категория: ${p.category}, Тип: ${p.type}, Цена: ${p.price} руб, Описание: ${p.description}, В наличии: ${p.stock} шт.`
-        ).join('\n');
+        const snapshot = await getDocs(collection(db, 'products_i18n'));
+        const products = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() as any }));
+        const contextString = products.map(p => {
+          const name = typeof p.name === 'object' ? (p.name['ru'] || p.name['en']) : p.name;
+          const desc = typeof p.description === 'object' ? (p.description['ru'] || p.description['en']) : p.description;
+          return `- ID: ${p.id}, Название: ${name}, Категория: ${p.category}, Тип: ${p.type}, Цена: ${p.price} руб, Описание: ${desc}, В наличии: ${p.stock} шт.`;
+        }).join('\n');
         setCatalogContext(contextString);
       } catch (error) {
         console.error('Error fetching catalog for AI:', error);

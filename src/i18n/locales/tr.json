@@ -1,0 +1,113 @@
+{
+  "nav": {
+    "catalog": "Katalog",
+    "about": "Hakkımızda",
+    "cart": "Sepet",
+    "login": "Giriş Yap",
+    "logout": "Çıkış Yap",
+    "admin": "Yönetici Paneli"
+  },
+  "home": {
+    "title": "Evcil hayvanlarınız için",
+    "titleHighlight": "akıllı mağaza",
+    "subtitle": "Mamadan oyuncağa — yapay zeka veterinerimizle mükemmel ürünleri bulacağız. Hızlı, kullanışlı ve özenli.",
+    "toCatalog": "Kataloğa Git",
+    "aiPick": "Yapay Zeka ile Seç",
+    "whoDoYouLove": "Kimi seviyorsunuz?"
+  },
+  "categories": {
+    "dogs": "Köpekler",
+    "cats": "Kediler",
+    "rodents": "Kemirgenler",
+    "birds": "Kuşlar",
+    "fish": "Balıklar",
+    "all": "Tümü"
+  },
+  "types": {
+    "food": "Mama",
+    "toys": "Oyuncaklar",
+    "equipment": "Ekipman",
+    "vet": "Veteriner Eczanesi",
+    "accessories": "Aksesuarlar",
+    "all": "Tümü"
+  },
+  "catalog": {
+    "title": "Ürün Kataloğu",
+    "search": "İsme göre ara...",
+    "filters": "Filtreler",
+    "animal": "Hayvan",
+    "productType": "Ürün Tipi",
+    "notFound": "Ürün bulunamadı. Filtreleri değiştirmeyi deneyin."
+  },
+  "product": {
+    "back": "Kataloğa Dön",
+    "description": "Açıklama",
+    "inStock": "Stokta ({{count}} adet)",
+    "outOfStock": "Stokta yok",
+    "addToCart": "Sepete Ekle",
+    "almostGone": "Tükenmek üzere"
+  },
+  "cart": {
+    "title": "Siparişi Tamamla",
+    "empty": "Sepetiniz boş",
+    "emptyDesc": "Görünüşe göre henüz bir şey eklememişsiniz. Evcil hayvanınız için ürünler bulmak üzere kataloğa gidin.",
+    "toCatalog": "Kataloğa Git",
+    "items": "Sepetteki Ürünler",
+    "itemsCount": "Ürünler ({{count}})",
+    "remove": "Kaldır",
+    "total": "Toplam",
+    "delivery": "Teslimat",
+    "free": "Ücretsiz",
+    "toPay": "Ödenecek Tutar",
+    "form": {
+      "name": "Alıcı Adı",
+      "namePlaceholder": "Ahmet Yılmaz",
+      "phone": "Telefon",
+      "address": "Teslimat Adresi",
+      "addressPlaceholder": "Örnek Mah. Örnek Sok. No:1 D:1, İstanbul",
+      "submit": "Siparişi Ver",
+      "submitLogin": "Giriş Yap ve Sipariş Ver",
+      "submitting": "İşleniyor...",
+      "terms": "Düğmeye tıklayarak kişisel verilerin işlenmesi şartlarını kabul etmiş olursunuz. Kapıda ödeme (MVP)."
+    },
+    "success": "Sipariş başarıyla oluşturuldu!",
+    "error": "Sipariş oluşturulurken hata oluştu. Lütfen tekrar deneyin."
+  },
+  "admin": {
+    "updateError": "Durum güncellenirken hata oluştu",
+    "accessDenied": "Erişim Reddedildi",
+    "noAdminRights": "Bu sayfayı görüntülemek için yönetici haklarına sahip değilsiniz.",
+    "title": "Sipariş Yönetimi (CRM)",
+    "loading": "Siparişler yükleniyor...",
+    "noOrders": "Henüz sipariş yok",
+    "idDate": "ID / Tarih",
+    "customer": "Müşteri",
+    "items": "Ürünler",
+    "itemsCount": "ürün",
+    "total": "Toplam",
+    "status": "Durum",
+    "actions": "İşlemler",
+    "statusNew": "Yeni",
+    "statusProcessing": "İşleniyor",
+    "statusShipped": "Kargolandı",
+    "statusDelivered": "Teslim Edildi",
+    "statusCancelled": "İptal Edildi"
+  },
+  "footer": {
+    "desc": "Sevgili evcil hayvanlarınız için en iyi ürünleri seçmede akıllı asistanınız.",
+    "nav": "Navigasyon",
+    "contacts": "İletişim",
+    "legal": "Yasal Bilgiler",
+    "privacy": "Gizlilik Politikası",
+    "terms": "Mesafeli Satış Sözleşmesi",
+    "kvkk": "KVKK Aydınlatma Metni"
+  },
+  "ai": {
+    "title": "Yapay Zeka Veteriner",
+    "status": "Çevrimiçi Danışman",
+    "placeholder": "Bir mesaj yazın...",
+    "typing": "Yazıyor...",
+    "error": "Yapay zeka ile iletişim kurulurken bir hata oluştu. Lütfen daha sonra tekrar deneyin.",
+    "links": "Faydalı bağlantılar:"
+  }
+}

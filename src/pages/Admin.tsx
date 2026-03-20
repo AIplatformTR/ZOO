@@ -4,11 +4,14 @@ import { db } from '../firebase';
 import { useAuth } from '../context/AuthContext';
 import { handleFirestoreError, OperationType } from '../utils/firestoreErrorHandler';
 import { Package, Clock, CheckCircle, XCircle, Truck } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const Admin: React.FC = () => {
   const { profile } = useAuth();
   const [orders, setOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const { t, i18n } = useTranslation();
+  const currentLang = i18n.language.split('-')[0];
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -34,15 +37,15 @@ export const Admin: React.FC = () => {
       setOrders(orders.map(o => o.id === orderId ? { ...o, status: newStatus } : o));
     } catch (error) {
       handleFirestoreError(error, OperationType.UPDATE, `orders/${orderId}`);
-      alert('Ошибка при обновлении статуса');
+      alert(t('admin.updateError'));
     }
   };
 
   if (profile?.role !== 'admin') {
     return (
       <div className="max-w-7xl mx-auto px-4 py-20 text-center">
-        <h1 className="text-2xl font-bold text-red-600 mb-4">Доступ запрещен</h1>
-        <p className="text-stone-600">У вас нет прав администратора для просмотра этой страницы.</p>
+        <h1 className="text-2xl font-bold text-red-600 mb-4">{t('admin.accessDenied')}</h1>
+        <p className="text-stone-600">{t('admin.noAdminRights')}</p>
       </div>
     );
   }
@@ -60,14 +63,14 @@ export const Admin: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <h1 className="text-3xl font-bold text-stone-900 mb-8">Управление заказами (CRM)</h1>
+      <h1 className="text-3xl font-bold text-stone-900 mb-8">{t('admin.title')}</h1>
 
       {loading ? (
-        <div className="text-center py-20 text-stone-500">Загрузка заказов...</div>
+        <div className="text-center py-20 text-stone-500">{t('admin.loading')}</div>
       ) : orders.length === 0 ? (
         <div className="bg-white rounded-2xl p-12 text-center border border-stone-100 shadow-sm">
           <Package className="w-12 h-12 text-stone-300 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-stone-900">Заказов пока нет</h3>
+          <h3 className="text-lg font-medium text-stone-900">{t('admin.noOrders')}</h3>
         </div>
       ) : (
         <div className="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden">
@@ -75,12 +78,12 @@ export const Admin: React.FC = () => {
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-stone-50 border-b border-stone-100">
-                  <th className="py-4 px-6 font-semibold text-stone-600 text-sm uppercase tracking-wider">ID / Дата</th>
-                  <th className="py-4 px-6 font-semibold text-stone-600 text-sm uppercase tracking-wider">Покупатель</th>
-                  <th className="py-4 px-6 font-semibold text-stone-600 text-sm uppercase tracking-wider">Товары</th>
-                  <th className="py-4 px-6 font-semibold text-stone-600 text-sm uppercase tracking-wider">Сумма</th>
-                  <th className="py-4 px-6 font-semibold text-stone-600 text-sm uppercase tracking-wider">Статус</th>
-                  <th className="py-4 px-6 font-semibold text-stone-600 text-sm uppercase tracking-wider">Действия</th>
+                  <th className="py-4 px-6 font-semibold text-stone-600 text-sm uppercase tracking-wider">{t('admin.idDate')}</th>
+                  <th className="py-4 px-6 font-semibold text-stone-600 text-sm uppercase tracking-wider">{t('admin.customer')}</th>
+                  <th className="py-4 px-6 font-semibold text-stone-600 text-sm uppercase tracking-wider">{t('admin.items')}</th>
+                  <th className="py-4 px-6 font-semibold text-stone-600 text-sm uppercase tracking-wider">{t('admin.total')}</th>
+                  <th className="py-4 px-6 font-semibold text-stone-600 text-sm uppercase tracking-wider">{t('admin.status')}</th>
+                  <th className="py-4 px-6 font-semibold text-stone-600 text-sm uppercase tracking-wider">{t('admin.actions')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-stone-100">
@@ -101,10 +104,10 @@ export const Admin: React.FC = () => {
                     </td>
                     <td className="py-4 px-6">
                       <div className="text-sm text-stone-900">
-                        {order.items.length} позиций
+                        {order.items.length} {t('admin.itemsCount')}
                       </div>
-                      <div className="text-xs text-stone-500 truncate max-w-[200px]" title={order.items.map((i: any) => i.name).join(', ')}>
-                        {order.items[0].name} {order.items.length > 1 && `и еще ${order.items.length - 1}`}
+                      <div className="text-xs text-stone-500 truncate max-w-[200px]" title={order.items.map((i: any) => typeof i.name === 'object' ? (i.name[currentLang] || i.name['en']) : i.name).join(', ')}>
+                        {typeof order.items[0].name === 'object' ? (order.items[0].name[currentLang] || order.items[0].name['en']) : order.items[0].name} {order.items.length > 1 && `и еще ${order.items.length - 1}`}
                       </div>
                     </td>
                     <td className="py-4 px-6 font-bold text-stone-900">
@@ -113,7 +116,13 @@ export const Admin: React.FC = () => {
                     <td className="py-4 px-6">
                       <div className="flex items-center gap-2">
                         {getStatusIcon(order.status)}
-                        <span className="text-sm font-medium text-stone-700">{order.status}</span>
+                        <span className="text-sm font-medium text-stone-700">
+                          {order.status === 'Новый' ? t('admin.statusNew') :
+                           order.status === 'В обработке' ? t('admin.statusProcessing') :
+                           order.status === 'Отправлен' ? t('admin.statusShipped') :
+                           order.status === 'Доставлен' ? t('admin.statusDelivered') :
+                           order.status === 'Отменен' ? t('admin.statusCancelled') : order.status}
+                        </span>
                       </div>
                     </td>
                     <td className="py-4 px-6">
@@ -122,11 +131,11 @@ export const Admin: React.FC = () => {
                         onChange={(e) => updateOrderStatus(order.id, e.target.value)}
                         className="bg-white border border-stone-200 text-stone-700 text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-500 block w-full p-2.5 outline-none"
                       >
-                        <option value="Новый">Новый</option>
-                        <option value="В обработке">В обработке</option>
-                        <option value="Отправлен">Отправлен</option>
-                        <option value="Доставлен">Доставлен</option>
-                        <option value="Отменен">Отменен</option>
+                        <option value="Новый">{t('admin.statusNew')}</option>
+                        <option value="В обработке">{t('admin.statusProcessing')}</option>
+                        <option value="Отправлен">{t('admin.statusShipped')}</option>
+                        <option value="Доставлен">{t('admin.statusDelivered')}</option>
+                        <option value="Отменен">{t('admin.statusCancelled')}</option>
                       </select>
                     </td>
                   </tr>

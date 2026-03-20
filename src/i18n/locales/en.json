@@ -1,0 +1,113 @@
+{
+  "nav": {
+    "catalog": "Catalog",
+    "about": "About Us",
+    "cart": "Cart",
+    "login": "Login",
+    "logout": "Logout",
+    "admin": "Admin Panel"
+  },
+  "home": {
+    "title": "Smart store for your",
+    "titleHighlight": "pets",
+    "subtitle": "From food to toys — we will find the perfect products with our AI vet. Fast, convenient, and with care.",
+    "toCatalog": "Go to Catalog",
+    "aiPick": "Pick with AI",
+    "whoDoYouLove": "Who do you love?"
+  },
+  "categories": {
+    "dogs": "Dogs",
+    "cats": "Cats",
+    "rodents": "Rodents",
+    "birds": "Birds",
+    "fish": "Fish",
+    "all": "All"
+  },
+  "types": {
+    "food": "Food",
+    "toys": "Toys",
+    "equipment": "Equipment",
+    "vet": "Vet Pharmacy",
+    "accessories": "Accessories",
+    "all": "All"
+  },
+  "catalog": {
+    "title": "Product Catalog",
+    "search": "Search by name...",
+    "filters": "Filters",
+    "animal": "Animal",
+    "productType": "Product Type",
+    "notFound": "No products found. Try changing the filters."
+  },
+  "product": {
+    "back": "Back to Catalog",
+    "description": "Description",
+    "inStock": "In stock ({{count}} pcs)",
+    "outOfStock": "Out of stock",
+    "addToCart": "Add to Cart",
+    "almostGone": "Almost gone"
+  },
+  "cart": {
+    "title": "Checkout",
+    "empty": "Your cart is empty",
+    "emptyDesc": "Looks like you haven't added anything yet. Go to the catalog to find products for your pet.",
+    "toCatalog": "Go to Catalog",
+    "items": "Items in Cart",
+    "itemsCount": "Items ({{count}})",
+    "remove": "Remove",
+    "total": "Total",
+    "delivery": "Delivery",
+    "free": "Free",
+    "toPay": "To Pay",
+    "form": {
+      "name": "Recipient Name",
+      "namePlaceholder": "John Doe",
+      "phone": "Phone",
+      "address": "Delivery Address",
+      "addressPlaceholder": "123 Main St, Apt 4B, New York, NY 10001",
+      "submit": "Place Order",
+      "submitLogin": "Login & Place Order",
+      "submitting": "Processing...",
+      "terms": "By clicking the button, you agree to the personal data processing terms. Payment on delivery (MVP)."
+    },
+    "success": "Order placed successfully!",
+    "error": "Error placing order. Please try again."
+  },
+  "admin": {
+    "updateError": "Error updating status",
+    "accessDenied": "Access Denied",
+    "noAdminRights": "You do not have administrator rights to view this page.",
+    "title": "Order Management (CRM)",
+    "loading": "Loading orders...",
+    "noOrders": "No orders yet",
+    "idDate": "ID / Date",
+    "customer": "Customer",
+    "items": "Items",
+    "itemsCount": "items",
+    "total": "Total",
+    "status": "Status",
+    "actions": "Actions",
+    "statusNew": "New",
+    "statusProcessing": "Processing",
+    "statusShipped": "Shipped",
+    "statusDelivered": "Delivered",
+    "statusCancelled": "Cancelled"
+  },
+  "footer": {
+    "desc": "Your smart assistant in choosing the best products for your beloved pets.",
+    "nav": "Navigation",
+    "contacts": "Contacts",
+    "legal": "Legal Information",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "kvkk": "Personal Data Protection (KVKK)"
+  },
+  "ai": {
+    "title": "AI Vet",
+    "status": "Online Consultant",
+    "placeholder": "Type a message...",
+    "typing": "Typing...",
+    "error": "An error occurred while contacting AI. Please try again later.",
+    "links": "Useful links:"
+  }
+}
