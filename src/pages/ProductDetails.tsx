@@ -7,6 +7,7 @@ import { handleFirestoreError, OperationType } from '../utils/firestoreErrorHand
 import { ArrowLeft, ShoppingCart, CheckCircle, AlertCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { INITIAL_PRODUCTS } from '../data/initialProducts';
+import { formatPrice } from '../utils/currency';
 
 export const ProductDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -87,7 +88,7 @@ export const ProductDetails: React.FC = () => {
             </h1>
 
             <div className="text-4xl font-bold text-stone-900 mb-8">
-              {product.price.toLocaleString('ru-RU')} ₽
+              {formatPrice(product.price)}
             </div>
 
             <div className="prose prose-stone mb-10">

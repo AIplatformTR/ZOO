@@ -13,6 +13,7 @@ import { Admin } from './pages/Admin';
 import { Legal } from './pages/Legal';
 import { About } from './pages/About';
 import { INITIAL_PRODUCTS } from './data/initialProducts';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 function DatabaseSeeder() {
   const { profile } = useAuth();
@@ -21,7 +22,7 @@ function DatabaseSeeder() {
   useEffect(() => {
     // Seed database if empty and user is admin
     const seedDatabase = async () => {
-      if (!isAdmin) return;
+      if (!isAdmin || !db) return;
       
       try {
         const productsRef = collection(db, 'products_i18n');
@@ -50,24 +51,26 @@ function DatabaseSeeder() {
 
 function App() {
   return (
-    <AuthProvider>
-      <DatabaseSeeder />
-      <CartProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Home />} />
-              <Route path="about" element={<About />} />
-              <Route path="catalog" element={<Catalog />} />
-              <Route path="product/:id" element={<ProductDetails />} />
-              <Route path="cart" element={<Cart />} />
-              <Route path="admin" element={<Admin />} />
-              <Route path="legal/:type" element={<Legal />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </CartProvider>
-    </AuthProvider>
+    <ErrorBoundary>
+      <AuthProvider>
+        <DatabaseSeeder />
+        <CartProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<Home />} />
+                <Route path="about" element={<About />} />
+                <Route path="catalog" element={<Catalog />} />
+                <Route path="product/:id" element={<ProductDetails />} />
+                <Route path="cart" element={<Cart />} />
+                <Route path="admin" element={<Admin />} />
+                <Route path="legal/:type" element={<Legal />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </CartProvider>
+      </AuthProvider>
+    </ErrorBoundary>
   );
 }
 

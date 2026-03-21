@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ShoppingCart } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useTranslation } from 'react-i18next';
+import { formatPrice } from '../utils/currency';
 
 interface Product {
   id: string;
@@ -53,7 +54,7 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
           <h3 className="font-semibold text-stone-900 line-clamp-2 hover:text-emerald-600 transition-colors">{productName}</h3>
         </Link>
         <div className="mt-auto flex items-center justify-between pt-4">
-          <span className="font-bold text-lg text-stone-900">{product.price.toLocaleString('ru-RU')} ₽</span>
+          <span className="font-bold text-lg text-stone-900">{formatPrice(product.price)}</span>
           <button 
             onClick={() => addToCart({
               productId: product.id,

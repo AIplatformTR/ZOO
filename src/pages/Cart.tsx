@@ -7,6 +7,7 @@ import { useAuth } from '../context/AuthContext';
 import { handleFirestoreError, OperationType } from '../utils/firestoreErrorHandler';
 import { Trash2, Plus, Minus, ArrowRight, ShoppingBag } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { formatPrice } from '../utils/currency';
 
 export const Cart: React.FC = () => {
   const { items, updateQuantity, removeFromCart, totalPrice, clearCart } = useCart();
@@ -97,7 +98,7 @@ export const Cart: React.FC = () => {
                       <Link to={`/product/${item.productId}`} className="font-semibold text-stone-900 hover:text-emerald-600 transition-colors line-clamp-2 mb-2">
                         {itemName}
                       </Link>
-                      <div className="text-lg font-bold text-stone-900">{item.price.toLocaleString('ru-RU')} ₽</div>
+                      <div className="text-lg font-bold text-stone-900">{formatPrice(item.price)}</div>
                     </div>
                     <div className="flex items-center gap-4 mt-4 sm:mt-0">
                       <div className="flex items-center bg-stone-100 rounded-full p-1">
@@ -127,7 +128,7 @@ export const Cart: React.FC = () => {
             
             <div className="flex justify-between items-center mb-4 text-stone-600">
               <span>{t('cart.itemsCount', { count: items.reduce((a, b) => a + b.quantity, 0) })}</span>
-              <span>{totalPrice.toLocaleString('ru-RU')} ₽</span>
+              <span>{formatPrice(totalPrice)}</span>
             </div>
             <div className="flex justify-between items-center mb-6 text-stone-600">
               <span>{t('cart.delivery')}</span>
@@ -136,7 +137,7 @@ export const Cart: React.FC = () => {
             
             <div className="flex justify-between items-center mb-8 pt-6 border-t border-stone-200">
               <span className="text-lg font-bold text-stone-900">{t('cart.toPay')}</span>
-              <span className="text-2xl font-bold text-stone-900">{totalPrice.toLocaleString('ru-RU')} ₽</span>
+              <span className="text-2xl font-bold text-stone-900">{formatPrice(totalPrice)}</span>
             </div>
 
             <form onSubmit={handleCheckout} className="space-y-4">

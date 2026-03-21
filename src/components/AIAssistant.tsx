@@ -6,9 +6,6 @@ import { GoogleGenAI } from '@google/genai';
 import { Link } from 'react-router-dom';
 import { INITIAL_PRODUCTS } from '../data/initialProducts';
 
-// Initialize Gemini
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-
 interface Message {
   role: 'user' | 'model';
   text: string;
@@ -24,6 +21,14 @@ export const AIAssistant: React.FC = () => {
   const [catalogContext, setCatalogContext] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [location, setLocation] = useState<{lat: number, lng: number} | null>(null);
+
+  const getAI = () => {
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      throw new Error('GEMINI_API_KEY is missing. Please set it in your environment variables.');
+    }
+    return new GoogleGenAI({ apiKey });
+  };
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -78,12 +83,15 @@ export const AIAssistant: React.FC = () => {
     setIsLoading(true);
 
     try {
+      const ai = getAI();
       const systemInstruction = `Ты ветеринар-консультант и продавец в интернет-магазине зоотоваров PetStore AI. 
 Твоя задача: помогать пользователям подбирать корм и товары, задавая вопросы о виде питомца, породе, возрасте и наличии аллергий. 
 Предлагай товары ТОЛЬКО из нашего каталога. Не придумывай товары, которых нет в списке.
 Если пользователь просит товар, которого нет, вежливо скажи об этом и предложи альтернативу из каталога.
 Отвечай кратко, дружелюбно и профессионально.
 Используй форматирование Markdown для выделения названий товаров.
+
+ВАЖНОЕ ПРАВИЛО: При ответе на любые вопросы, касающиеся здоровья питомца (ветеринарные вопросы), ОБЯЗАТЕЛЬНО добавляй в конце ответа пометку: "ВНИМАНИЕ: Данная консультация носит рекомендательный характер. Пожалуйста, всегда обращайтесь к квалифицированному ветеринарному специалисту для постановки диагноза и назначения лечения."
 
 НАШ КАТАЛОГ ТОВАРОВ:
 ${catalogContext}`;

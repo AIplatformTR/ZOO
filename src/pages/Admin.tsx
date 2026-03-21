@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { handleFirestoreError, OperationType } from '../utils/firestoreErrorHandler';
 import { Package, Clock, CheckCircle, XCircle, Truck, Bell, Box } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { formatPrice } from '../utils/currency';
 
 export const Admin: React.FC = () => {
   const { profile } = useAuth();
@@ -192,7 +193,7 @@ export const Admin: React.FC = () => {
                           </div>
                         </td>
                         <td className="py-4 px-6 font-bold text-stone-900">
-                          {order.totalAmount.toLocaleString('ru-RU')} ₽
+                          {formatPrice(order.totalAmount)}
                         </td>
                         <td className="py-4 px-6">
                           <div className="flex items-center gap-2">
@@ -267,7 +268,7 @@ export const Admin: React.FC = () => {
                             </span>
                           </td>
                           <td className="py-4 px-6 font-medium text-stone-900">
-                            {product.price.toLocaleString('ru-RU')} ₽
+                            {formatPrice(product.price)}
                           </td>
                           <td className="py-4 px-6">
                             <div className="flex items-center gap-2">
