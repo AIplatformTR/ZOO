@@ -11,9 +11,12 @@ export const Layout: React.FC = () => {
   const { totalItems } = useCart();
   const { t, i18n } = useTranslation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLangOpen, setIsLangOpen] = useState(false);
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
+    setIsLangOpen(false);
+    setIsMobileMenuOpen(false);
   };
 
   return (
@@ -40,14 +43,16 @@ export const Layout: React.FC = () => {
             </nav>
 
             <div className="flex items-center gap-2 sm:gap-4">
-              <div className="relative group flex items-center gap-1 text-stone-600 cursor-pointer p-2">
+              <div className="relative flex items-center gap-1 text-stone-600 cursor-pointer p-2" onClick={() => setIsLangOpen(!isLangOpen)}>
                 <Globe className="w-5 h-5" />
-                <span className="text-sm font-medium uppercase hidden sm:inline">{i18n.language.split('-')[0]}</span>
-                <div className="absolute top-full right-0 mt-2 w-32 bg-white rounded-xl shadow-lg border border-stone-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                  <button onClick={() => changeLanguage('tr')} className="block w-full text-left px-4 py-2 text-sm text-stone-700 hover:bg-emerald-50 hover:text-emerald-700 rounded-t-xl">Türkçe</button>
-                  <button onClick={() => changeLanguage('ru')} className="block w-full text-left px-4 py-2 text-sm text-stone-700 hover:bg-emerald-50 hover:text-emerald-700">Русский</button>
-                  <button onClick={() => changeLanguage('en')} className="block w-full text-left px-4 py-2 text-sm text-stone-700 hover:bg-emerald-50 hover:text-emerald-700 rounded-b-xl">English</button>
-                </div>
+                <span className="text-sm font-medium uppercase hidden sm:inline">{i18n.language?.split('-')[0] || 'en'}</span>
+                {isLangOpen && (
+                  <div className="absolute top-full right-0 mt-2 w-32 bg-white rounded-xl shadow-lg border border-stone-100 z-[60]">
+                    <button onClick={(e) => { e.stopPropagation(); changeLanguage('tr'); }} className="block w-full text-left px-4 py-3 text-sm text-stone-700 hover:bg-emerald-50 hover:text-emerald-700 rounded-t-xl border-b border-stone-50">Türkçe</button>
+                    <button onClick={(e) => { e.stopPropagation(); changeLanguage('ru'); }} className="block w-full text-left px-4 py-3 text-sm text-stone-700 hover:bg-emerald-50 hover:text-emerald-700 border-b border-stone-50">Русский</button>
+                    <button onClick={(e) => { e.stopPropagation(); changeLanguage('en'); }} className="block w-full text-left px-4 py-3 text-sm text-stone-700 hover:bg-emerald-50 hover:text-emerald-700 rounded-b-xl">English</button>
+                  </div>
+                )}
               </div>
 
               <Link to="/cart" className="relative p-2 text-stone-600 hover:text-emerald-600 transition-colors">
@@ -83,21 +88,57 @@ export const Layout: React.FC = () => {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden bg-white border-t border-stone-100 px-4 py-4 space-y-4 shadow-lg absolute w-full">
-            <Link 
-              to="/catalog" 
-              className="block text-stone-600 hover:text-emerald-600 font-medium text-lg"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              {t('nav.catalog')}
-            </Link>
-            <Link 
-              to="/about" 
-              className="block text-stone-600 hover:text-emerald-600 font-medium text-lg"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              {t('nav.about')}
-            </Link>
+          <div className="md:hidden bg-white border-t border-stone-100 px-4 py-6 space-y-6 shadow-xl absolute w-full z-40 animate-in slide-in-from-top duration-200">
+            <div className="space-y-4">
+              <Link 
+                to="/catalog" 
+                className="flex items-center gap-3 text-stone-700 hover:text-emerald-600 font-semibold text-xl p-2"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <ShoppingCart className="w-6 h-6 text-emerald-600" />
+                {t('nav.catalog')}
+              </Link>
+              <Link 
+                to="/about" 
+                className="flex items-center gap-3 text-stone-700 hover:text-emerald-600 font-semibold text-xl p-2"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <PawPrint className="w-6 h-6 text-emerald-600" />
+                {t('nav.about')}
+              </Link>
+            </div>
+
+            <div className="pt-6 border-t border-stone-100">
+              {user ? (
+                <div className="space-y-4">
+                  {profile?.role === 'admin' && (
+                    <Link 
+                      to="/admin" 
+                      className="flex items-center gap-3 text-stone-700 hover:text-emerald-600 font-semibold text-xl p-2"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <Shield className="w-6 h-6 text-emerald-600" />
+                      {t('nav.admin')}
+                    </Link>
+                  )}
+                  <button 
+                    onClick={() => { logout(); setIsMobileMenuOpen(false); }} 
+                    className="flex items-center gap-3 w-full text-left text-red-600 font-semibold text-xl p-2"
+                  >
+                    <LogOut className="w-6 h-6" />
+                    {t('nav.logout')}
+                  </button>
+                </div>
+              ) : (
+                <button 
+                  onClick={() => { login(); setIsMobileMenuOpen(false); }} 
+                  className="flex items-center justify-center gap-3 w-full bg-emerald-600 text-white font-bold text-xl py-4 rounded-2xl shadow-lg active:scale-95 transition-all"
+                >
+                  <LogIn className="w-6 h-6" />
+                  {t('nav.login')}
+                </button>
+              )}
+            </div>
           </div>
         )}
       </header>

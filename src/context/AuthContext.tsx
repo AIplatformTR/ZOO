@@ -74,10 +74,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const login = async () => {
+    if (!auth) {
+      console.error("Firebase Auth is not initialized. Check your configuration.");
+      alert("Ошибка: Сервис аутентификации не доступен. Проверьте настройки Firebase.");
+      return;
+    }
     try {
+      // For mobile devices, popups can be tricky, but we follow the environment preference.
       await signInWithPopup(auth, googleProvider);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Login failed", error);
+      if (error.code === 'auth/popup-blocked') {
+        alert("Вход заблокирован всплывающим окном. Пожалуйста, разрешите всплывающие окна для этого сайта.");
+      } else if (error.code === 'auth/cancelled-popup-request') {
+        // User closed the popup, no need to alert
+      } else {
+        alert(`Ошибка входа: ${error.message}`);
+      }
     }
   };
 

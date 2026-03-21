@@ -13,6 +13,7 @@ export const Catalog: React.FC = () => {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [showFilters, setShowFilters] = useState(false);
   const { t, i18n } = useTranslation();
   const currentLang = i18n.language.split('-')[0];
 
@@ -62,7 +63,16 @@ export const Catalog: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-        <h1 className="text-3xl font-bold text-stone-900">{t('nav.catalog')}</h1>
+        <div className="flex items-center justify-between w-full md:w-auto">
+          <h1 className="text-3xl font-bold text-stone-900">{t('nav.catalog')}</h1>
+          <button 
+            onClick={() => setShowFilters(!showFilters)}
+            className="md:hidden flex items-center gap-2 px-4 py-2 bg-stone-100 text-stone-700 rounded-full font-medium active:scale-95 transition-all"
+          >
+            <Filter className="w-4 h-4" />
+            {t('catalog.filters')}
+          </button>
+        </div>
         
         <div className="relative w-full md:w-96">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 w-5 h-5" />
@@ -78,7 +88,7 @@ export const Catalog: React.FC = () => {
 
       <div className="flex flex-col md:flex-row gap-8">
         {/* Sidebar Filters */}
-        <aside className="w-full md:w-64 shrink-0">
+        <aside className={`w-full md:w-64 shrink-0 ${showFilters ? 'block' : 'hidden md:block'}`}>
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-stone-100 sticky top-24">
             <div className="flex items-center gap-2 mb-6 text-stone-900 font-semibold">
               <Filter className="w-5 h-5" />
